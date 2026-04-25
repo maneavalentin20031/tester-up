@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tester-Up — Get Paid to Test Apps & Games</title>
+  <link rel="icon" href="data:,">
+  <meta name="description" content="Join Tester-Up, complete 2 quick tasks and start earning real money by testing apps and games today." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0a;
+      --card:      rgba(20, 20, 20, 0.98);
+      --border:    rgba(255,255,255,0.09);
+      --text:      #f5f5f5;
+      --muted:     #888888;
+      --red:       #ef4444;
+      --red-dark:  #dc2626;
+      --green:     #4ade80;
+      --shadow:    0 24px 64px rgba(0,0,0,0.7);
+      --font:      -apple-system, "Segoe UI", system-ui, sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      font-family: var(--font);
+      color: var(--text);
+      background:
+        radial-gradient(ellipse 70% 35% at 50% 0%, rgba(239,68,68,0.09), transparent),
+        #0a0a0a;
+      display: flex;
+      justify-content: center;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body::before {
+      content: "";
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+      background-size: 44px 44px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 520px;
+      padding: 22px 16px 56px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── TOP PILL ── */
+    .topbar { display: flex; justify-content: center; margin-bottom: 18px; }
+
+    .top-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(239,68,68,0.10);
+      border: 1px solid rgba(239,68,68,0.28);
+      color: #ff8080;
+      border-radius: 999px;
+      padding: 8px 16px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .dot {
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--red);
+      flex-shrink: 0;
+      animation: livepulse 2.2s ease-in-out infinite;
+    }
+
+    @keyframes livepulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.6); }
+      50%      { box-shadow: 0 0 0 7px rgba(239,68,68,0); }
+    }
+
+    /* ── LIVE COUNTER ── */
+    .live-counter {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-bottom: 14px;
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #aaaaaa;
+    }
+
+    .live-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      animation: livepulse2 2s ease-in-out infinite;
+    }
+
+    @keyframes livepulse2 {
+      0%,100% { box-shadow: 0 0 0 0 rgba(74,222,128,0.6); }
+      50%      { box-shadow: 0 0 0 6px rgba(74,222,128,0); }
+    }
+
+    .live-counter strong { color: #fff; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(155deg, rgba(22,22,22,0.97), rgba(12,12,12,0.98));
+      border: 1px solid var(--border);
+      border-radius: 28px;
+      padding: 22px 18px 20px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute; top: -70px; right: -70px;
+      width: 240px; height: 240px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(239,68,68,0.11), transparent 65%);
+      pointer-events: none;
+    }
+
+    /* ── BRAND ── */
+    .brand {
+      display: flex; flex-direction: column;
+      align-items: center; gap: 5px;
+      margin-bottom: 16px;
+      position: relative; z-index: 1;
+    }
+
+    .brand-logo { height: 80px; width: auto; object-fit: contain; }
+
+    .brand-tag {
+      font-size: 11px; color: var(--muted);
+      font-weight: 500; letter-spacing: .02em;
+    }
+
+    /* ── COUNTDOWN ── */
+    .countdown-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 16px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .countdown-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #ff8080;
+      margin-bottom: 8px;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .cd-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.20);
+      border-radius: 12px;
+      padding: 8px 14px;
+      min-width: 58px;
+    }
+
+    .cd-num {
+      font-size: 22px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .cd-lbl {
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      color: #ff8080;
+      margin-top: 3px;
+    }
+
+    .cd-sep { font-size: 20px; font-weight: 900; color: var(--red); margin-top: -6px; }
+
+    /* ── URGENCY PILL ── */
+    .urgency {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      border-radius: 999px;
+      background: rgba(239,68,68,0.09);
+      color: #ff8080;
+      border: 1px solid rgba(239,68,68,0.22);
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+      margin: 0 auto 16px;
+      width: fit-content;
+      position: relative; z-index: 1;
+    }
+
+    /* ── HEADLINE ── */
+    .headline {
+      text-align: center;
+      font-size: clamp(28px, 8vw, 42px);
+      line-height: 1.07;
+      letter-spacing: -0.04em;
+      font-weight: 900;
+      margin-bottom: 12px;
+      position: relative; z-index: 1;
+    }
+
+    .headline .ao { color: var(--red); }
+
+    .subtext {
+      text-align: center;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--muted);
+      max-width: 400px;
+      margin: 0 auto 10px;
+      position: relative; z-index: 1;
+    }
+
+    .subtext strong { color: #fff; }
+
+    .trust-line {
+      text-align: center;
+      font-size: 13px;
+      color: #aaaaaa;
+      font-weight: 700;
+      margin: 0 auto 18px;
+      position: relative; z-index: 1;
+    }
+
+    .trust-line strong { color: #fff; }
+
+    /* ── PROOF CARDS ── */
+    .proof-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 9px;
+      position: relative; z-index: 1;
+    }
+
+    .proof-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 12px 8px;
+      text-align: center;
+    }
+
+    .proof-card strong {
+      display: block;
+      font-size: 16px;
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .proof-card span { font-size: 10.5px; line-height: 1.4; color: var(--muted); }
+
+    /* ── CTA ── */
+    .cta-stack { position: sticky; bottom: 12px; z-index: 10; }
+
+    .cta-trust {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #e0e0e0;
+      letter-spacing: .01em;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: 999px;
+      padding: 10px 20px;
+    }
+
+    .cta-trust .check { color: var(--green); font-size: 15px; }
+    .cta-trust .sep   { color: #444; }
+
+    @keyframes btnpulse {
+      0%,100% { box-shadow: 0 14px 40px rgba(239,68,68,0.45), inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 0 rgba(239,68,68,0.5); }
+      50%      { box-shadow: 0 14px 40px rgba(239,68,68,0.45), inset 0 1px 0 rgba(255,255,255,0.25), 0 0 0 14px rgba(239,68,68,0); }
+    }
+
+    .cta-btn {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      text-decoration: none;
+      background: linear-gradient(180deg, #f87171 0%, #ef4444 50%, #dc2626 100%);
+      color: #fff;
+      border-radius: 22px;
+      padding: 18px 20px;
+      border: none;
+      animation: btnpulse 2s ease-in-out infinite;
+      transition: transform .13s, filter .13s;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+
+    .cta-btn:hover {
+      transform: translateY(-2px) scale(1.01);
+      filter: brightness(1.07);
+      animation: none;
+      box-shadow: 0 22px 52px rgba(239,68,68,0.58);
+    }
+
+    .cta-icon {
+      min-width: 50px; height: 36px;
+      border-radius: 11px;
+      background: rgba(0,0,0,0.14);
+      display: flex; align-items: center; justify-content: center;
+      gap: 5px; flex-shrink: 0; padding: 0 9px;
+    }
+
+    .cta-icon svg { width: 16px; height: 16px; fill: currentColor; }
+
+    .cta-copy { display: flex; flex-direction: column; align-items: flex-start; }
+
+    .cta-copy strong {
+      font-size: 17px; line-height: 1.15;
+      font-weight: 900; color: #fff; letter-spacing: -0.02em;
+    }
+
+    .cta-copy span { font-size: 11.5px; color: rgba(255,255,255,0.72); font-weight: 600; }
+
+    .cta-speed {
+      text-align: center;
+      font-size: 12px;
+      color: #aaaaaa;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .cta-speed span { color: var(--green); }
+
+    .cta-note {
+      text-align: center;
+      font-size: 12px;
+      color: #777;
+      line-height: 1.5;
+      margin-bottom: 4px;
+    }
+
+    .cta-note strong { color: #bbb; }
+
+    /* ── HOW IT WORKS STRIP ── */
+    .strip {
+      margin: 16px 0;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      color: #cccccc;
+      border-radius: 20px;
+      padding: 14px 16px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+
+    .strip strong { color: #fff; }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      font-size: 10.5px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 20px 0 11px;
+      text-align: center;
+    }
+
+    /* ── EARN RANGE CARD ── */
+    .earn-range {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 14px;
+      box-shadow: var(--shadow);
+    }
+
+    .earn-range h3 {
+      font-size: 14px;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 12px;
+    }
+
+    .earn-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 9px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      font-size: 13px;
+    }
+
+    .earn-row:last-child { border-bottom: none; }
+    .earn-row span { color: var(--muted); }
+    .earn-row strong { color: #fff; font-weight: 800; }
+    .earn-row .badge {
+      background: rgba(239,68,68,0.12);
+      border: 1px solid rgba(239,68,68,0.20);
+      color: #ff8080;
+      border-radius: 999px;
+      padding: 2px 9px;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    /* ── OFFER CARDS ── */
+    .offer-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 14px;
+      display: grid;
+      grid-template-columns: 50px 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .offer-icon {
+      width: 50px; height: 50px;
+      border-radius: 15px;
+      background: rgba(239,68,68,0.08);
+      border: 1px solid rgba(239,68,68,0.16);
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    .offer-icon svg { width: 21px; height: 21px; fill: var(--red); }
+
+    .offer-info strong {
+      display: block; font-size: 15px; font-weight: 800;
+      line-height: 1.2; margin-bottom: 4px; color: #fff;
+    }
+
+    .offer-info span { font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+    .offer-price { text-align: right; }
+    .offer-price strong { display: block; font-size: 24px; color: #fff; line-height: 1; font-weight: 900; }
+    .offer-price span { font-size: 11px; color: var(--red); font-weight: 800; text-transform: uppercase; }
+
+    /* ── STEPS ── */
+    .steps {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 12px;
+      display: grid; gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 11px;
+      align-items: start;
+      padding: 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      transition: border-color .2s, background .2s;
+    }
+
+    .step:hover { background: rgba(239,68,68,0.05); border-color: rgba(239,68,68,0.18); }
+
+    .step-num {
+      width: 42px; height: 42px;
+      border-radius: 13px;
+      background: rgba(239,68,68,0.10);
+      border: 1px solid rgba(239,68,68,0.20);
+      color: var(--red);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 16px; flex-shrink: 0;
+    }
+
+    .step h3 { font-size: 14.5px; font-weight: 800; margin-bottom: 4px; color: #fff; }
+    .step p  { font-size: 12.5px; color: var(--muted); line-height: 1.55; }
+
+    /* ── AS SEEN ON ── */
+    .seen-on {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 16px;
+      margin-bottom: 16px;
+      text-align: center;
+    }
+
+    .seen-on-label {
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+      color: #555;
+      margin-bottom: 12px;
+    }
+
+    .seen-on-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 22px;
+      flex-wrap: wrap;
+    }
+
+    .seen-on-logos svg { height: 20px; width: auto; opacity: 0.55; fill: #fff; }
+
+    /* ── TESTIMONIALS ── */
+    .testimonials { display: grid; gap: 12px; margin-bottom: 16px; }
+
+    .testimonial {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .t-header { display: flex; align-items: center; gap: 11px; margin-bottom: 10px; }
+
+    .t-avatar {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .t-meta strong { display: block; font-size: 13.5px; color: #fff; font-weight: 800; }
+    .t-meta span   { font-size: 11.5px; color: var(--muted); }
+
+    .stars { color: var(--red); font-size: 13px; letter-spacing: 2px; }
+
+    .testimonial p {
+      font-size: 13.5px; color: #c0c0c0;
+      line-height: 1.65; font-style: italic;
+    }
+
+    /* ── FAQ ── */
+    .faq {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: var(--shadow);
+    }
+
+    .faq-item {
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .faq-item:last-child { border-bottom: none; }
+
+    .faq-q {
+      width: 100%;
+      background: none;
+      border: none;
+      color: #fff;
+      font-family: var(--font);
+      font-size: 13.5px;
+      font-weight: 800;
+      text-align: left;
+      padding: 15px 16px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      transition: color .15s;
+    }
+
+    .faq-q:hover { color: #ff8080; }
+
+    .faq-icon {
+      font-size: 18px;
+      color: var(--red);
+      flex-shrink: 0;
+      transition: transform .25s;
+      font-style: normal;
+    }
+
+    .faq-a {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+      max-height: 0;
+      overflow: hidden;
+      padding: 0 16px;
+      transition: max-height .3s ease, padding .3s ease;
+    }
+
+    .faq-item.open .faq-a   { max-height: 200px; padding: 0 16px 14px; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding-top: 4px;
+      color: #333;
+      font-size: 11.5px;
+      line-height: 1.7;
+    }
+
+    footer a { color: inherit; text-decoration: none; margin: 0 8px; transition: color .15s; }
+    footer a:hover { color: var(--muted); }
+
+    @media (max-width: 400px) {
+      .page { padding-left: 12px; padding-right: 12px; }
+      .proof-row { grid-template-columns: 1fr; }
+      .offer-card { grid-template-columns: 46px 1fr; }
+      .offer-price { grid-column: 2; text-align: left; }
+      .cd-block { min-width: 50px; padding: 7px 10px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- LIVE COUNTER -->
+    <div class="live-counter">
+      <span class="live-dot"></span>
+      <span><strong id="live-count">1,247</strong> people joined in the last 24h</span>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="brand">
+        <img src="data:image/png;base64,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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH/2Q==" alt="Tester-Up" class="brand-logo" />
+        <div class="brand-tag">Get paid to test apps &amp; games</div>
+      </div>
+
+      <!-- COUNTDOWN -->
+      <div class="countdown-wrap">
+        <div class="countdown-label">⏰ Bonus offer expires in</div>
+        <div class="countdown">
+          <div class="cd-block"><span class="cd-num" id="cd-h">11</span><span class="cd-lbl">Hours</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-block"><span class="cd-num" id="cd-m">47</span><span class="cd-lbl">Min</span></div>
+          <span class="cd-sep">:</span>
+          <div class="cd-block"><span class="cd-num" id="cd-s">22</span><span class="cd-lbl">Sec</span></div>
+        </div>
+      </div>
+
+      <div class="urgency">⚡ Limited spots available today</div>
+
+      <h1 class="headline">
+        Earn real money<br>testing <span class="ao">apps &amp; games</span>
+      </h1>
+
+      <p class="subtext">
+        Sign up, complete <strong>2 short tasks</strong> and unlock your first paid testing offers — starting today. Takes less than <strong>60 seconds.</strong>
+      </p>
+
+      <div class="trust-line">
+        ✔ Join <strong>500,000+</strong> testers · <strong>$50M+</strong> paid out worldwide
+      </div>
+
+      <div class="proof-row">
+        <div class="proof-card">
+          <strong>$10</strong>
+          <span>welcome bonus for new accounts</span>
+        </div>
+        <div class="proof-card">
+          <strong>60 sec</strong>
+          <span>to create your account</span>
+        </div>
+        <div class="proof-card">
+          <strong>iOS + Android</strong>
+          <span>works on both devices</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="cta-stack">
+      <div class="cta-trust">
+        <span class="check">✓</span> No credit card required
+        <span class="sep">|</span>
+        ⚡ Instant access
+      </div>
+      <a
+        href="https://taptrcks.com/r/eyJ0IjoidGVzdGVydXAtYSIsInRpZCI6ImM2YmY5MGU5OTBiZDJiN2E1NGU1IiwidHMiOjE3NzcxMTM4NDYyMTV9"
+        class="cta-btn"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Start earning now"
+      >
+        <span class="cta-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+          <svg viewBox="0 0 24 24"><path d="M17.6 9.48l1.43-2.49-.87-.5-1.45 2.51a7.93 7.93 0 0 0-6.42 0L8.84 6.49l-.87.5 1.43 2.49A6.978 6.978 0 0 0 5 15v3h2v-3a5 5 0 0 1 10 0v3h2v-3a6.978 6.978 0 0 0-1.4-5.52zM9 13h2v2H9zm4 0h2v2h-2z"/></svg>
+        </span>
+        <span class="cta-copy">
+          <strong>Start earning now</strong>
+          <span>iOS &amp; Android · Free to join</span>
+        </span>
+      </a>
+      <div class="cta-speed">⏱ <span>Takes less than 60 seconds to sign up</span></div>
+      <div class="cta-note">
+        <strong>Important:</strong> only new accounts qualify for the $10 welcome bonus.
+      </div>
+    </div>
+
+    <!-- STRIP -->
+    <div class="strip">
+      🎯 <strong>How this works:</strong> Tester-Up connects you with app developers who need real users to test their products before launch. You get paid — they get feedback. Win-win.
+    </div>
+
+    <!-- HOW MUCH CAN I EARN -->
+    <div class="section-title">How much can I earn?</div>
+    <div class="earn-range">
+      <h3>💰 Earnings per task type</h3>
+      <div class="earn-row">
+        <span>🎮 Game testing session</span>
+        <strong>$5 – $50</strong>
+      </div>
+      <div class="earn-row">
+        <span>📱 App review task</span>
+        <strong>$2 – $15</strong>
+      </div>
+      <div class="earn-row">
+        <span>🔍 Bug report mission</span>
+        <strong>$10 – $40</strong>
+      </div>
+      <div class="earn-row">
+        <span>⭐ Welcome bonus</span>
+        <strong class="badge">+$10 FREE</strong>
+      </div>
+    </div>
+
+    <!-- WHAT YOU GET -->
+    <div class="section-title">What you get</div>
+
+    <div class="offer-card">
+      <div class="offer-icon">
+        <svg viewBox="0 0 24 24"><path d="M15 7.5V2H9v5.5l3 3 3-3zM7.5 9H2v6h5.5l3-3-3-3zM9 16.5V22h6v-5.5l-3-3-3 3zM16.5 9l-3 3 3 3H22V9h-5.5z"/></svg>
+      </div>
+      <div class="offer-info">
+        <strong>App &amp; Game Testing</strong>
+        <span>Access game tests and short paid missions from your dashboard.</span>
+      </div>
+      <div class="offer-price">
+        <strong>$10</strong>
+        <span>start bonus</span>
+      </div>
+    </div>
+
+    <div class="offer-card">
+      <div class="offer-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1.41 16.09V20h-2.67v-1.93c-1.71-.36-3.16-1.46-3.27-3.4h1.96c.1 1.05.82 1.87 2.65 1.87 1.96 0 2.4-.98 2.4-1.59 0-.83-.44-1.61-2.67-2.14-2.48-.6-4.18-1.62-4.18-3.67 0-1.72 1.39-2.84 3.11-3.21V4h2.67v1.95c1.86.45 2.79 1.86 2.85 3.39H14.3c-.05-1.11-.64-1.87-2.22-1.87-1.5 0-2.4.68-2.4 1.64 0 .84.65 1.39 2.67 1.91s4.18 1.39 4.18 3.91c-.01 1.83-1.38 2.83-3.12 3.16z"/></svg>
+      </div>
+      <div class="offer-info">
+        <strong>Instant Cash Withdrawals</strong>
+        <span>Withdraw via PayPal, crypto, or gift cards — no minimum hold period.</span>
+      </div>
+      <div class="offer-price">
+        <strong>Fast</strong>
+        <span>payout</span>
+      </div>
+    </div>
+
+    <!-- HOW IT WORKS -->
+    <div class="section-title">How it works</div>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div>
+          <h3>Click the button above</h3>
+          <p>Create a new Tester-Up account through this page to qualify for the $10 welcome bonus.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div>
+          <h3>Complete 2 quick tasks</h3>
+          <p>Finish the first two simple actions to unlock your full testing dashboard and offers.</p>
+        </div>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div>
+          <h3>Get paid</h3>
+          <p>Start testing apps and games, earn points, and cash out whenever you want.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- AS SEEN ON -->
+    <div class="section-title">Trusted payout methods</div>
+    <div class="seen-on">
+      <div class="seen-on-label">Withdraw your earnings via</div>
+      <div class="seen-on-logos">
+        <!-- PayPal -->
+        <svg viewBox="0 0 101 32" xmlns="http://www.w3.org/2000/svg"><path d="M12.237 2.093h-8.5a1.179 1.179 0 0 0-1.164.997L.007 24.074a.707.707 0 0 0 .698.818h4.056a1.179 1.179 0 0 0 1.164-.997l.694-4.402a1.179 1.179 0 0 1 1.163-.997h2.687c5.59 0 8.815-2.705 9.659-8.067.38-2.346.016-4.19-1.082-5.479-1.205-1.421-3.34-2.057-6.809-2.057zm.979 7.95c-.464 3.047-2.792 3.047-5.044 3.047h-1.281l.898-5.696a.707.707 0 0 1 .697-.597h.588c1.534 0 2.98 0 3.727.874.448.522.585 1.296.415 2.372zm24.394-.118h-4.072a.707.707 0 0 0-.697.598l-.18 1.139-.285-.413c-.883-1.281-2.85-1.71-4.814-1.71-4.503 0-8.348 3.413-9.095 8.198-.389 2.389.164 4.672 1.516 6.261 1.24 1.463 3.014 2.072 5.126 2.072 3.628 0 5.643-2.331 5.643-2.331l-.183 1.13a.707.707 0 0 0 .698.818h3.668a1.179 1.179 0 0 0 1.164-.997l2.203-13.947a.707.707 0 0 0-.696-.818zm-5.674 7.932c-.393 2.33-2.24 3.895-4.598 3.895-1.183 0-2.129-.38-2.737-1.099-.604-.715-.831-1.732-.642-2.866.368-2.311 2.244-3.928 4.566-3.928 1.158 0 2.097.384 2.717 1.11.624.73.868 1.755.694 2.888zm26.466-7.932h-4.09a1.179 1.179 0 0 0-.972.513l-5.616 8.27-2.38-7.95a1.179 1.179 0 0 0-1.129-.833h-4.018a.707.707 0 0 0-.672.934l4.481 13.148-4.214 5.948a.707.707 0 0 0 .576 1.121h4.086a1.179 1.179 0 0 0 .967-.505l13.53-19.535a.707.707 0 0 0-.549-1.11z"/><path d="M72.78 2.093h-8.5a1.179 1.179 0 0 0-1.164.997l-2.566 16.26-.006.049a1.179 1.179 0 0 0 1.164.998h3.88a.826.826 0 0 0 .815-.698l.728-4.616.012-.075a1.179 1.179 0 0 1 1.163-.998h2.687c5.59 0 8.815-2.705 9.659-8.067.38-2.346.015-4.19-1.082-5.479-1.205-1.421-3.34-2.057-6.79-2.057v-.314zm.979 7.95c-.464 3.047-2.792 3.047-5.044 3.047h-1.281l.898-5.696a.707.707 0 0 1 .697-.597h.588c1.534 0 2.98 0 3.727.874.448.522.585 1.296.415 2.372zm24.394-.118h-4.072a.707.707 0 0 0-.698.598l-.179 1.139-.285-.413c-.883-1.281-2.85-1.71-4.814-1.71-4.503 0-8.348 3.413-9.096 8.198-.388 2.389.165 4.672 1.517 6.261 1.24 1.463 3.013 2.072 5.126 2.072 3.628 0 5.643-2.331 5.643-2.331l-.183 1.13a.707.707 0 0 0 .698.818h3.668a1.179 1.179 0 0 0 1.163-.997l2.204-13.947a.707.707 0 0 0-.696-.818zm-5.674 7.932c-.393 2.33-2.24 3.895-4.597 3.895-1.184 0-2.13-.38-2.738-1.099-.603-.715-.831-1.732-.641-2.866.367-2.311 2.244-3.928 4.565-3.928 1.158 0 2.098.384 2.718 1.11.623.73.867 1.755.693 2.888z"/></svg>
+        <!-- Bitcoin -->
+        <svg viewBox="0 0 24 24"><path d="M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.546zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.33-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-1.815-.45-.35 1.407s.975.225.955.236c.535.136.63.486.615.766l-1.477 5.92c-.075.166-.24.406-.614.314.015.02-.96-.24-.96-.24l-.66 1.51 1.71.426.93.242-.54 2.19 1.32.327.54-2.17c.36.1.705.19 1.05.273l-.51 2.154 1.32.33.545-2.19c2.24.427 3.93.257 4.64-1.774.57-1.637-.03-2.58-1.217-3.196.854-.193 1.5-.76 1.68-1.93zm-3.01 4.22c-.404 1.64-3.157.75-4.05.53l.72-2.9c.896.23 3.757.67 3.33 2.37zm.41-4.24c-.37 1.49-2.662.735-3.405.55l.654-2.64c.744.18 3.137.524 2.75 2.09z"/></svg>
+        <!-- Gift Card / Store -->
+        <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.26.18-.51.18-.78C18 3.45 16.55 2 14.78 2c-.9 0-1.69.37-2.27.97L12 3.5l-.51-.53C10.9 2.37 10.1 2 9.22 2C7.45 2 6 3.45 6 5.22c0 .27.1.52.18.78H4c-1.11 0-1.99.89-1.99 2L2 19c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V8c0-1.11-.89-2-2-2zm-5.22-2c.45 0 .78.33.78.78S15.23 5.56 14.78 5.56H12.7C12.88 4.63 13.75 4 14.78 4zM9.22 4c1.03 0 1.9.63 2.08 1.56H9.22C8.77 5.56 8.44 5.23 8.44 4.78S8.77 4 9.22 4zM20 19H4v-2h16v2zm0-5H4V8h5.08L7 10.83 8.62 12 11 8.76l1 1.36 1-1.36L15.38 12 17 10.83 14.92 8H20v6z"/></svg>
+        <!-- Crypto/ETH -->
+        <svg viewBox="0 0 24 24"><path d="M11.944 17.97L4.58 13.62 11.943 24l7.37-10.38-7.37 4.35zM12.056 0L4.69 12.223l7.365 4.354 7.365-4.35L12.056 0z"/></svg>
+      </div>
+    </div>
+
+    <!-- TESTIMONIALS -->
+    <div class="section-title">What testers say</div>
+    <div class="testimonials">
+      <div class="testimonial">
+        <div class="t-header">
+          <div class="t-avatar" style="background:rgba(239,68,68,0.12);">🧑</div>
+          <div class="t-meta">
+            <strong>Marcus T.</strong>
+            <span>Verified Tester-Up member · <span class="stars">★★★★★</span></span>
+          </div>
+        </div>
+        <p>"I made $130 in my first week just testing mobile games during my lunch break. The tasks are simple and payouts are fast."</p>
+      </div>
+      <div class="testimonial">
+        <div class="t-header">
+          <div class="t-avatar" style="background:rgba(74,222,128,0.10);">👩</div>
+          <div class="t-meta">
+            <strong>Priya S.</strong>
+            <span>Verified Tester-Up member · <span class="stars">★★★★★</span></span>
+          </div>
+        </div>
+        <p>"Signed up in under a minute. Got my first $10 bonus instantly, then earned another $60 that same afternoon testing an app."</p>
+      </div>
+      <div class="testimonial">
+        <div class="t-header">
+          <div class="t-avatar" style="background:rgba(96,165,250,0.10);">👨</div>
+          <div class="t-meta">
+            <strong>Jordan K.</strong>
+            <span>Verified Tester-Up member · <span class="stars">★★★★★</span></span>
+          </div>
+        </div>
+        <p>"Cashed out $85 straight to PayPal within 10 minutes. No nonsense, just real money for real testing work."</p>
+      </div>
+    </div>
+
+    <!-- FAQ -->
+    <div class="section-title">Frequently asked questions</div>
+    <div class="faq">
+      <div class="faq-item">
+        <button class="faq-q">When do I get paid? <i class="faq-icon">+</i></button>
+        <div class="faq-a">Payouts are processed instantly once you reach the minimum threshold. You can withdraw to PayPal, crypto wallets, or receive gift cards — with no minimum hold period.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Is it really free to join? <i class="faq-icon">+</i></button>
+        <div class="faq-a">Yes, 100% free. No credit card required, no subscriptions, no hidden fees. You sign up and immediately start earning from available test missions.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">How much can I realistically earn? <i class="faq-icon">+</i></button>
+        <div class="faq-a">Most active testers earn between $250–$500 per week depending on how many missions they complete. Game testing sessions typically pay $5–$50 each.</div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">Do I need any experience? <i class="faq-icon">+</i></button>
+        <div class="faq-a">No experience needed. If you can use a smartphone, you can complete testing tasks. All instructions are provided inside the app for every mission.</div>
+      </div>
+    </div>
+
+    <footer>
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms of Service</a>
+      <a href="#">Disclaimer</a><br>
+      © 2026 Tester-Up. All rights reserved.
+    </footer>
+  </div>
+
+  <script>
+    /* ── URL param passthrough ── */
+    document.addEventListener("DOMContentLoaded", function () {
+      document.querySelectorAll("a").forEach(function (el) {
+        var href = el.getAttribute("href");
+        if (!href || href.startsWith("#")) return;
+        el.setAttribute("href", href + (href.includes("?") ? window.location.search.replace("?","&") : window.location.search));
+      });
+    });
+
+    /* ── Countdown timer ── */
+    (function () {
+      var h = document.getElementById("cd-h");
+      var m = document.getElementById("cd-m");
+      var s = document.getElementById("cd-s");
+      var stored = sessionStorage.getItem("cd_end");
+      var end;
+      if (stored) {
+        end = parseInt(stored);
+      } else {
+        end = Date.now() + (11 * 3600 + 47 * 60 + 22) * 1000;
+        sessionStorage.setItem("cd_end", end);
+      }
+      function tick() {
+        var diff = Math.max(0, Math.floor((end - Date.now()) / 1000));
+        h.textContent = String(Math.floor(diff / 3600)).padStart(2, "0");
+        m.textContent = String(Math.floor((diff % 3600) / 60)).padStart(2, "0");
+        s.textContent = String(diff % 60).padStart(2, "0");
+        if (diff > 0) setTimeout(tick, 1000);
+      }
+      tick();
+    })();
+
+    /* ── Live counter fluctuation ── */
+    (function () {
+      var el = document.getElementById("live-count");
+      var base = 1247;
+      function update() {
+        base += Math.floor(Math.random() * 3);
+        el.textContent = base.toLocaleString();
+        setTimeout(update, 4000 + Math.random() * 6000);
+      }
+      setTimeout(update, 5000);
+    })();
+
+    /* ── Spots counter ── */
+    (function () {
+      var el = document.getElementById("spots");
+      var n = 14;
+      function drop() {
+        if (n > 7) {
+          n--;
+          el.textContent = n;
+          setTimeout(drop, 30000 + Math.random() * 60000);
+        }
+      }
+      setTimeout(drop, 20000);
+    })();
+
+    /* ── FAQ accordion ── */
+    document.querySelectorAll(".faq-q").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var item = btn.closest(".faq-item");
+        var isOpen = item.classList.contains("open");
+        document.querySelectorAll(".faq-item").forEach(function (i) { i.classList.remove("open"); });
+        if (!isOpen) item.classList.add("open");
+      });
+    });
+  </script>
+</body>
+</html>
